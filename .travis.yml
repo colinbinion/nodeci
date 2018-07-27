@@ -1,0 +1,28 @@
+# what lang using?
+language: node_js
+# what version node?
+node_js: {
+  - "8"
+}
+# distribution (OS of virtual machine)
+dist: trusty
+# list services NN
+services:
+  - mongodb
+  - redis-server
+# list enviroment variables
+env:
+  - NODE_ENV=ci PORT=3000
+# cacheing node_modules to reduce debt
+cache:
+  - node_modules
+  - client/node_modules
+# gets project ready to run inside VM
+install:
+  - npm install
+  - npm run build
+# starts server and tests
+script:
+  - nohup npm run start &
+  - sleep 3
+  - npm run test
